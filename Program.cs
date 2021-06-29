@@ -7,16 +7,12 @@ namespace ArchiveBackUps
 {
     class Program
     {
-        private static string ArchivePath;
-
         static void Main(string[] args)
         {
             Console.WriteLine("Program Starting ...");
 
             //პარამეტრების წაკითხვა 
-            ArchivePath = args[0];
-
-            string folderPath = ArchivePath;
+            string folderPath = args[0];
 
             DirectoryInfo startDir = new DirectoryInfo(folderPath);
 
@@ -64,12 +60,13 @@ namespace ArchiveBackUps
                 using (var zipArchive = ZipFile.Open(zipPath, ZipArchiveMode.Create))
                 {
                     Console.WriteLine("Creating Archive " + zipPath);
-                    Thread.Sleep(1000);
                     zipArchive.CreateEntryFromFile(file.FullName, file.Name);
 
                     Console.WriteLine("Deleting File " + file.Name);
-                    Thread.Sleep(2000);
                     file.Delete();
+
+                    Console.WriteLine("File Deleted " + file.Name);
+                    Thread.Sleep(2000);
                 }
             }
         }
